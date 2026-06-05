@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Team-GenZ | Café POS</title>
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"> -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="slogo">
+    <div class="licon">P</div>
+    <div class="ltxt">Team-GenZ<span>Cafe-POS</span></div>
+    <div class="lver">v2.4</div>
+  </div>
+  <nav>
+    <div class="nsec">
+      <div class="nlbl">Overview</div>
+      <div class="ni" onclick="go('dashboard')" id="ni-dashboard">
+        <span class="ni-ico">⊞</span>Dashboard
+      </div>
+    </div>
+    <div class="nsec">
+      <div class="nlbl">Point of Sale</div>
+      <div class="ni" onclick="go('sell')" id="ni-sell">
+        <span class="ni-ico">🖥</span>Sell
+      </div>
+    </div>
+    <div class="nsec">
+      <div class="nlbl">Products</div>
+      <div class="ni" onclick="go('list-product')" id="ni-list-product">
+        <span class="ni-ico">≡</span>List Product
+      </div>
+      <div class="ni" onclick="go('add-product')" id="ni-add-product">
+        <span class="ni-ico">＋</span>Add Product
+      </div>
+      <div class="ni" onclick="go('category')" id="ni-category">
+        <span class="ni-ico">🏷</span>Category
+      </div>
+    </div>
+    <div class="nsec">
+      <div class="nlbl">Purchase</div>
+      <div class="ni" onclick="go('supplier')" id="ni-supplier">
+        <span class="ni-ico">🏭</span>Supplier
+      </div>
+      <div class="ni" onclick="go('purchase-order')" id="ni-purchase-order">
+        <span class="ni-ico">📋</span>Purchase Order
+      </div>
+    </div>
+    <div class="nsec">
+      <div class="nlbl">Analytics</div>
+      <div class="ni" onclick="go('report')" id="ni-report">
+        <span class="ni-ico">📊</span>Report
+      </div>
+    </div>
+    <div class="nsec">
+      <div class="nlbl">Management</div>
+      <div class="ni" onclick="go('customers')" id="ni-customers">
+        <span class="ni-ico">👥</span>Customers
+      </div>
+      <div class="ni" onclick="go('inventory')" id="ni-inventory">
+        <span class="ni-ico">📦</span>Inventory
+        <span class="bdg" id="inv-bdg">3</span>
+      </div>
+      <div class="ni" onclick="go('discounts')" id="ni-discounts">
+        <span class="ni-ico">🎟</span>Discounts
+      </div>
+      <div class="ni" onclick="go('staff')" id="ni-staff">
+        <span class="ni-ico">🪪</span>Staff
+      </div>
+    </div>
+    <div class="nsec">
+      <div class="nlbl">System</div>
+      <div class="ni" onclick="go('settings')" id="ni-settings">
+        <span class="ni-ico">⚙</span>Settings
+      </div>
+    </div>
+  </nav>
+  <div class="sfooter">
+    <div class="ucard">
+      <div class="avt">DK</div>
+      <div class="flex1">
+        <div class="uname">Dara Kim</div>
+        <div class="urole">Administrator</div>
+      </div>
+      <span style="color:var(--text3);font-size:16px">⋯</span>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="hdr">
+    <div class="ptitle" id="hdr-title">Dashboard <span>Overview</span></div>
+    <div id="hdr-actions"></div>
+    <button class="nfbtn" id="theme-toggle" onclick="toggleTheme()" title="Toggle Theme" style="border:none;background:none;cursor:pointer;font-size:20px;padding:8px;">
+      ☀️
+    </button>
+    <div class="nfbtn" onclick="showToast('No new notifications','info')" title="Notifications">
+      🔔<div class="ndot"></div>
+    </div>
+  </header>
+
+  <!-- ===== DASHBOARD ===== -->
+  <div class="content active" id="page-dashboard">
+    <div class="dash-welcome">
+      <div class="dash-welcome-text">
+        <h2>Good morning, AEU Team</h2>
+        <p>Here's what's brewing at Team-GenZ Cafe-POS.</p>
+      </div>
+      <div class="dash-time" id="dash-clock">--:--:--</div>
+    </div>
+    <div class="sgrid">
+      <div class="scard">
+        <div class="slbl">Total Revenue</div>
+        <div class="sval" style="color:var(--accent)">$8,240</div>
+        <div class="sch up">▲ 10.5% from yesterday</div>
+        <span class="s-icon">💰</span>
+      </div>
+      <div class="scard">
+        <div class="slbl">Total Orders</div>
+        <div class="sval" style="color:var(--blue)">621</div>
+        <div class="sch up">▲ 10.5% from yesterday</div>
+        <span class="s-icon">🧾</span>
+      </div>
+      <div class="scard">
+        <div class="slbl">Total Customers</div>
+        <div class="sval" style="color:var(--purple)">184</div>
+        <div class="sch dn">▼ 2.1% from yesterday</div>
+        <span class="s-icon">👥</span>
+      </div>
+      <div class="scard">
+        <div class="slbl">Products Sold</div>
+        <div class="sval" style="color:var(--green)">4,031</div>
+        <div class="sch up">▲ 23% this month</div>
+        <span class="s-icon">📦</span>
+      </div>
+    </div>
+    <div class="g3">
+      <div class="card">
+        <div class="ch">
+          <div class="ctitle">Sales Overview</div>
+          <select class="finp" style="width:auto;padding:5px 10px;font-size:11px;">
+            <option>This Month</option><option>Last Month</option><option>This Year</option>
+          </select>
+        </div>
+        <div style="padding:16px 20px;">
+          <div class="bar-chart">
+            <div class="bw"><div class="b" style="height:55%"></div><div class="bl">Jan</div></div>
+            <div class="bw"><div class="b" style="height:70%"></div><div class="bl">Feb</div></div>
+            <div class="bw"><div class="b alt" style="height:45%"></div><div class="bl">Mar</div></div>
+            <div class="bw"><div class="b" style="height:88%"></div><div class="bl">Apr</div></div>
+            <div class="bw"><div class="b alt" style="height:60%"></div><div class="bl">May</div></div>
+            <div class="bw"><div class="b" style="height:80%"></div><div class="bl">Jun</div></div>
+            <div class="bw"><div class="b alt" style="height:100%"></div><div class="bl">Jul</div></div>
+            <div class="bw"><div class="b" style="height:75%"></div><div class="bl">Aug</div></div>
+            <div class="bw"><div class="b alt" style="height:65%"></div><div class="bl">Sep</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch">
+          <div class="ctitle">Top Products</div>
+          <span class="ca" onclick="go('report')">See all</span>
+        </div>
+        <div class="tpitem"><div class="tprank" style="color:var(--accent)">1</div><div class="tpname">Caramel Ice Latte</div><div class="tpbar"><div class="tpfill" style="width:90%"></div></div><div class="tpval">$682</div></div>
+        <div class="tpitem"><div class="tprank">2</div><div class="tpname">Iced Americano</div><div class="tpbar"><div class="tpfill" style="width:72%"></div></div><div class="tpval">$682</div></div>
+        <div class="tpitem"><div class="tprank">3</div><div class="tpname">Caramel Drizzle</div><div class="tpbar"><div class="tpfill" style="width:58%;background:var(--green)"></div></div><div class="tpval">$451</div></div>
+        <div class="tpitem"><div class="tprank">4</div><div class="tpname">Belgian Waffle</div><div class="tpbar"><div class="tpfill" style="width:44%;background:var(--purple)"></div></div><div class="tpval">$336</div></div>
+        <div class="tpitem"><div class="tprank">5</div><div class="tpname">Whipped Cream</div><div class="tpbar"><div class="tpfill" style="width:30%;background:var(--blue)"></div></div><div class="tpval">$241</div></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="card">
+        <div class="ch"><div class="ctitle">Recent Orders</div><span class="ca" onclick="go('report')">View all</span></div>
+        <table class="tbl"><thead><tr><th>Order ID</th><th>Table</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+        <tbody id="dash-orders"></tbody></table>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ctitle">Low Stock Alert</div><span class="ca" onclick="go('inventory')">Manage</span></div>
+        <table class="tbl"><thead><tr><th>Product</th><th>Stock</th><th>Status</th></tr></thead>
+        <tbody id="dash-low-stock"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SELL ===== -->
+  <div class="content" id="page-sell">
+    <div class="pos-layout">
+      <div class="pos-left">
+        <div class="sbar">
+          <input class="sinp" placeholder="🔍 Search products..." oninput="filterPOS(this.value)"/>
+          <div class="cat-tabs" id="pos-cats"></div>
+        </div>
+        <div class="prod-grid" id="pos-grid"></div>
+      </div>
+      <div class="pos-right">
+        <div class="cart-hdr">
+          <div class="row" style="display:flex;align-items:center;justify-content:space-between;">
+            <span>🛒 Cart</span>
+            <span style="font-size:11px;color:var(--text3);" id="cart-count">(0 items)</span>
+            <button class="hbtn bg" style="padding:5px 10px;font-size:11px;" onclick="clearCart()">Clear</button>
+          </div>
+          <div style="margin-top:10px;">
+            <select class="finp" id="cart-table" style="padding:7px 12px;font-size:12px;">
+              <option value="">— Select Table —</option>
+              <option>Table 1</option><option>Table 2</option><option>Table 3</option>
+              <option>Table 4</option><option>Table 5</option><option>Takeaway</option>
+            </select>
+          </div>
+        </div>
+        <div class="cart-items" id="cart-items">
+          <div class="empty-cart">
+            <span style="font-size:36px">🛒</span>
+            <span style="font-weight:700;">Cart is empty</span>
+            <span style="font-size:11px;color:var(--text3);">Click products to add</span>
+          </div>
+        </div>
+        <div class="cart-foot">
+          <div class="cf-row"><span style="color:var(--text3);">Subtotal</span><span class="mono" id="cart-sub">$0.00</span></div>
+          <div class="cf-row">
+            <span style="color:var(--text3);">Discount</span>
+            <span class="row" style="display:flex;align-items:center;gap:6px;">
+              <input class="finp" id="disc-inp" type="number" min="0" max="100" value="0"
+                style="width:60px;padding:4px 8px;font-size:12px;" oninput="recalc()"/> %
+            </span>
+          </div>
+          <div class="cf-row"><span style="color:var(--text3);">Tax (10%)</span><span class="mono" id="cart-tax">$0.00</span></div>
+          <div class="cf-row total"><span>Total</span><span class="mono" id="cart-total">$0.00</span></div>
+          <button class="pay-btn" onclick="openPayModal()">💳 Process Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LIST PRODUCT ===== -->
+  <div class="content" id="page-list-product">
+    <div class="sbar">
+      <input class="sinp" placeholder="🔍 Search products..." oninput="filterProducts(this.value)"/>
+      <select class="finp" id="prod-cat-filter" onchange="filterProducts()" style="width:160px;padding:9px 12px;font-size:12px;">
+        <option value="">All Categories</option>
+      </select>
+      <button class="hbtn bp" onclick="go('add-product')">＋ Add Product</button>
+    </div>
+    <div class="card">
+      <table class="tbl"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="prod-tbody"></tbody></table>
+      <div class="pgn">
+        <span class="pinfo" id="prod-pinfo"></span>
+        <button class="pbn" onclick="prodPage(-1)">‹</button>
+        <button class="pbn active" id="prod-pg1" onclick="prodGoPage(1)">1</button>
+        <button class="pbn" id="prod-pg2" onclick="prodGoPage(2)" style="display:none;">2</button>
+        <button class="pbn" onclick="prodPage(1)">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ADD PRODUCT ===== -->
+  <div class="content" id="page-add-product">
+    <div class="card" style="max-width:720px;">
+      <div class="ch"><div class="ctitle" id="add-prod-title">Add New Product</div></div>
+      <div class="mbody">
+        <input type="hidden" id="edit-prod-id" value=""/>
+        <div class="fgrid fg2">
+          <div class="fgrp"><div class="flbl">Product Name *</div><input class="finp" id="f-pname" placeholder="e.g. Apple Juice"/></div>
+          <div class="fgrp"><div class="flbl">Category *</div><select class="finp" id="f-pcat"><option value="">Select category</option></select></div>
+          <div class="fgrp"><div class="flbl">Price *</div><input class="finp" id="f-pprice" type="number" step="0.01" placeholder="0.00"/></div>
+          <div class="fgrp"><div class="flbl">Stock Quantity *</div><input class="finp" id="f-pstock" type="number" placeholder="0"/></div>
+          <div class="fgrp"><div class="flbl">Cost Price</div><input class="finp" id="f-pcost" type="number" step="0.01" placeholder="0.00"/></div>
+          <div class="fgrp"><div class="flbl">SKU / Barcode</div><input class="finp" id="f-psku" placeholder="e.g. SKU-001"/></div>
+          <div class="fgrp" style="grid-column:1/-1"><div class="flbl">Description</div><textarea class="finp" id="f-pdesc" placeholder="Product description..."></textarea></div>
+          <div class="fgrp"><div class="flbl">Icon (Emoji)</div><input class="finp" id="f-picon" placeholder="🍎"/></div>
+          <div class="fgrp"><div class="flbl">Status</div><select class="finp" id="f-pstatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+        </div>
+        <div class="row mt16" style="display:flex;gap:12px;margin-top:16px;">
+          <button class="hbtn bp" onclick="saveProduct()">💾 Save Product</button>
+          <button class="hbtn bg" onclick="resetProductForm()">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CATEGORY ===== -->
+  <div class="content" id="page-category">
+    <div class="g2" style="display:grid;grid-template-columns:1fr 360px;gap:20px;">
+      <div class="card">
+        <div class="ch"><div class="ctitle">Categories</div></div>
+        <table class="tbl"><thead><tr><th>Name</th><th>Products</th><th>Actions</th></tr></thead>
+        <tbody id="cat-tbody"></tbody></table>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ctitle" id="cat-form-title">Add Category</div></div>
+        <div class="mbody">
+          <input type="hidden" id="edit-cat-id" value=""/>
+          <div class="fgrp"><div class="flbl">Name *</div><input class="finp" id="f-cname" placeholder="e.g. Hot Coffee"/></div>
+          <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Icon (Emoji)</div><input class="finp" id="f-cicon" placeholder="☕"/></div>
+          <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Description</div><textarea class="finp" id="f-cdesc" placeholder="Category description..."></textarea></div>
+          <div class="row mt16" style="display:flex;gap:12px;margin-top:16px;">
+            <button class="hbtn bp" onclick="saveCat()">💾 Save</button>
+            <button class="hbtn bg" onclick="resetCatForm()">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SUPPLIER ===== -->
+  <div class="content" id="page-supplier">
+    <div class="sbar">
+      <input class="sinp" placeholder="🔍 Search suppliers..." oninput="filterSuppliers(this.value)"/>
+      <button class="hbtn bp" onclick="openSupplierModal()">＋ Add Supplier</button>
+    </div>
+    <div class="card">
+      <table class="tbl"><thead><tr><th>Supplier</th><th>Contact</th><th>Email</th><th>Phone</th><th>Balance</th><th>Actions</th></tr></thead>
+      <tbody id="sup-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== PURCHASE ORDER ===== -->
+  <div class="content" id="page-purchase-order">
+    <div class="sbar">
+      <button class="hbtn bp" onclick="openPOModal()">＋ New Purchase Order</button>
+    </div>
+    <div class="card">
+      <table class="tbl"><thead><tr><th>Order ID</th><th>Supplier</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="po-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== REPORT ===== -->
+  <div class="content" id="page-report">
+    <div class="sgrid">
+      <div class="scard"><div class="slbl">Net Sales</div><div class="sval">$12,450.00</div><div class="sch up">▲ 12% vs last month</div></div>
+      <div class="scard"><div class="slbl">Net Profit</div><div class="sval" style="color:var(--green)">$8,120.50</div><div class="sch up">▲ 8% vs last month</div></div>
+      <div class="scard"><div class="slbl">Orders</div><div class="sval" style="color:var(--blue)">1,245</div><div class="sch up">▲ 15% vs last month</div></div>
+      <div class="scard"><div class="slbl">Avg. Order</div><div class="sval" style="color:var(--purple)">$10.00</div><div class="sch dn">▼ 2% vs last month</div></div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <div class="ctitle">Product Performance</div>
+        <select class="finp" id="rep-cat-filter" onchange="renderReport()" style="width:160px;padding:7px 12px;font-size:12px;">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      <table class="tbl"><thead><tr><th>Product</th><th>Category</th><th>Sold</th><th>Revenue</th><th>Price</th><th>Trend</th></tr></thead>
+      <tbody id="report-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== CUSTOMERS ===== -->
+  <div class="content" id="page-customers">
+    <div class="sbar">
+      <input class="sinp" placeholder="🔍 Search customers..." oninput="filterCustomers(this.value)"/>
+      <button class="hbtn bp" onclick="openCustModal()">＋ Add Customer</button>
+    </div>
+    <div class="card">
+      <table class="tbl"><thead><tr><th>Customer</th><th>Email</th><th>Phone</th><th>Orders</th><th>Total Spent</th><th>Actions</th></tr></thead>
+      <tbody id="cust-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== INVENTORY ===== -->
+  <div class="content" id="page-inventory">
+    <div class="sbar">
+      <input class="sinp" placeholder="🔍 Search inventory..." oninput="filterInventory(this.value)"/>
+    </div>
+    <div class="card">
+      <table class="tbl"><thead><tr><th>Product</th><th>Category</th><th>Current Stock</th><th>Min. Stock</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="inv-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== DISCOUNTS ===== -->
+  <div class="content" id="page-discounts">
+    <div class="g2" style="display:grid;grid-template-columns:1fr 360px;gap:20px;">
+      <div class="card">
+        <div class="ch"><div class="ctitle">Active Discounts</div></div>
+        <table class="tbl"><thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Usage</th><th>Expiry</th><th>Actions</th></tr></thead>
+        <tbody id="disc-tbody"></tbody></table>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ctitle" id="disc-form-title">New Discount</div></div>
+        <div class="mbody">
+          <input type="hidden" id="edit-disc-id"/>
+          <div class="fgrp"><div class="flbl">Code *</div><input class="finp" id="f-dcode" placeholder="e.g. SUMMER25"/></div>
+          <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Type</div><select class="finp" id="f-dtype"><option value="percent">Percentage (%)</option><option value="fixed">Fixed Amount ($)</option></select></div>
+          <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Value *</div><input class="finp" id="f-dval" type="number" step="0.01"/></div>
+          <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Max Uses</div><input class="finp" id="f-duses" type="number" value="100"/></div>
+          <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Expiry Date</div><input class="finp" id="f-dexp" type="date"/></div>
+          <div class="row mt16" style="display:flex;gap:12px;margin-top:16px;">
+            <button class="hbtn bp" onclick="saveDiscount()">💾 Save</button>
+            <button class="hbtn bg" onclick="resetDiscForm()">↺ Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STAFF ===== -->
+  <div class="content" id="page-staff">
+    <div class="sbar">
+      <input class="sinp" placeholder="🔍 Search staff..." oninput="filterStaff(this.value)"/>
+      <button class="hbtn bp" onclick="openStaffModal()">＋ Add Staff</button>
+    </div>
+    <div class="card">
+      <table class="tbl"><thead><tr><th>Staff Name</th><th>Role</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="staff-tbody"></tbody></table>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS ===== -->
+  <div class="content" id="page-settings">
+    <div class="card" style="max-width:600px;">
+      <div class="ch"><div class="ctitle">General Settings</div></div>
+      <div class="mbody">
+        <div class="fgrp"><div class="flbl">Store Name</div><input class="finp" id="s-sname"/></div>
+        <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Tax Percentage (%)</div><input class="finp" id="s-tax" type="number" step="0.1"/></div>
+        <div class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Receipt Footer</div><textarea class="finp" id="s-receipt"></textarea></div>
+        <button class="hbtn bp mt16" style="margin-top:16px;" onclick="saveSettings()">💾 Save Settings</button>
+      </div>
+    </div>
+    <div class="card" style="max-width:600px;">
+      <div class="ch"><div class="ctitle">Database Management</div></div>
+      <div class="mbody">
+        <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">System Statistics:</p>
+        <div class="row" style="display:flex;gap:20px;margin-bottom:20px;">
+          <div class="stat"><div class="flbl">Products</div><div class="rval" id="si-prods" style="font-size:20px;">0</div></div>
+          <div class="stat"><div class="flbl">Customers</div><div class="rval" id="si-custs" style="font-size:20px;">0</div></div>
+          <div class="stat"><div class="flbl">Orders</div><div class="rval" id="si-orders" style="font-size:20px;">0</div></div>
+        </div>
+        <button class="hbtn bg" style="color:var(--red);border-color:var(--red-dim);" onclick="resetDB()">⚠ Reset All Data</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Payment Modal -->
+<div class="modal-bg" id="pay-modal">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle">Process Payment</div><button class="mclose" onclick="closeModal('pay-modal')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrp"><div class="flbl">Payment Method</div><select class="finp" id="pay-method"><option value="cash">Cash</option><option value="card">Credit/Debit Card</option><option value="qr">QR Code / E-Wallet</option></select></div>
+      <div id="cash-field" class="fgrp mt12" style="margin-top:12px;"><div class="flbl">Amount Received</div><input class="finp" type="number" id="pay-cash" placeholder="0.00"/></div>
+      <div id="change-row" class="mt12" style="display:none;margin-top:12px;padding:12px;background:var(--surface2);border-radius:8px;"><div class="flbl">Change Due</div><div class="rval" style="color:var(--green);">$0.00</div></div>
+    </div>
+    <div class="mfoot"><button class="hbtn bg" onclick="closeModal('pay-modal')">Cancel</button><button class="hbtn bp" onclick="processPayment()">💳 Confirm Payment</button></div>
+  </div>
+</div>
+
+<!-- Supplier Modal -->
+<div class="modal-bg" id="sup-modal">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle" id="sup-modal-title">Add Supplier</div><button class="mclose" onclick="closeModal('sup-modal')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="edit-sup-id"/>
+      <div class="fgrid fg2">
+        <div class="fgrp"><div class="flbl">Supplier Name *</div><input class="finp" id="f-sname" placeholder="e.g. Coffee Roasters"/></div>
+        <div class="fgrp"><div class="flbl">Contact Person</div><input class="finp" id="f-scontact"/></div>
+        <div class="fgrp"><div class="flbl">Email</div><input class="finp" id="f-semail" type="email"/></div>
+        <div class="fgrp"><div class="flbl">Phone</div><input class="finp" id="f-sphone"/></div>
+        <div class="fgrp" style="grid-column:1/-1"><div class="flbl">Address</div><input class="finp" id="f-saddr"/></div>
+      </div>
+    </div>
+    <div class="mfoot"><button class="hbtn bg" onclick="closeModal('sup-modal')">Cancel</button><button class="hbtn bp" onclick="saveSupplier()">💾 Save</button></div>
+  </div>
+</div>
+
+<!-- PO Modal -->
+<div class="modal-bg" id="po-modal">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle">New Purchase Order</div><button class="mclose" onclick="closeModal('po-modal')">✕</button></div>
+    <div class="mbody">
+      <div class="fgrid fg2">
+        <div class="fgrp"><div class="flbl">Supplier *</div><select class="finp" id="f-posup"></select></div>
+        <div class="fgrp"><div class="flbl">Date</div><input class="finp" id="f-podate" type="date"/></div>
+        <div class="fgrp"><div class="flbl">Product *</div><select class="finp" id="f-poprod"></select></div>
+        <div class="fgrp"><div class="flbl">Quantity *</div><input class="finp" id="f-poqty" type="number"/></div>
+        <div class="fgrp"><div class="flbl">Unit Cost ($) *</div><input class="finp" id="f-pocost" type="number" step="0.01"/></div>
+        <div class="fgrp"><div class="flbl">Initial Status</div><select class="finp" id="f-postatus"><option value="pending">Pending</option><option value="received">Received</option></select></div>
+      </div>
+    </div>
+    <div class="mfoot"><button class="hbtn bg" onclick="closeModal('po-modal')">Cancel</button><button class="hbtn bp" onclick="savePO()">💾 Create Order</button></div>
+  </div>
+</div>
+
+<!-- Customer Modal -->
+<div class="modal-bg" id="cust-modal">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle" id="cust-modal-title">Add Customer</div><button class="mclose" onclick="closeModal('cust-modal')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="edit-cust-id"/>
+      <div class="fgrid fg2">
+        <div class="fgrp"><div class="flbl">Full Name *</div><input class="finp" id="f-custname" placeholder="John Doe"/></div>
+        <div class="fgrp"><div class="flbl">Email</div><input class="finp" id="f-custemail" type="email"/></div>
+        <div class="fgrp"><div class="flbl">Phone</div><input class="finp" id="f-custphone"/></div>
+        <div class="fgrp"><div class="flbl">Loyalty Points</div><input class="finp" id="f-custpoints" type="number" value="0"/></div>
+      </div>
+    </div>
+    <div class="mfoot"><button class="hbtn bg" onclick="closeModal('cust-modal')">Cancel</button><button class="hbtn bp" onclick="saveCustomer()">💾 Save</button></div>
+  </div>
+</div>
+
+<!-- Staff Modal -->
+<div class="modal-bg" id="staff-modal">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle" id="staff-modal-title">Add Staff</div><button class="mclose" onclick="closeModal('staff-modal')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="edit-staff-id"/>
+      <div class="fgrid fg2">
+        <div class="fgrp"><div class="flbl">Full Name *</div><input class="finp" id="f-staffname" placeholder="John Smith"/></div>
+        <div class="fgrp"><div class="flbl">Role</div><select class="finp" id="f-staffrole"><option>Cashier</option><option>Manager</option><option>Admin</option><option>Waiter</option></select></div>
+        <div class="fgrp"><div class="flbl">Email</div><input class="finp" id="f-staffemail" type="email"/></div>
+        <div class="fgrp"><div class="flbl">Phone</div><input class="finp" id="f-staffphone"/></div>
+        <div class="fgrp"><div class="flbl">Password</div><input class="finp" id="f-staffpass" type="password" placeholder="••••••••"/></div>
+        <div class="fgrp"><div class="flbl">Status</div><select class="finp" id="f-staffstatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+      </div>
+    </div>
+    <div class="mfoot"><button class="hbtn bg" onclick="closeModal('staff-modal')">Cancel</button><button class="hbtn bp" onclick="saveStaff()">💾 Save</button></div>
+  </div>
+</div>
+
+<!-- Adjust Stock Modal -->
+<div class="modal-bg" id="adj-modal">
+  <div class="modal">
+    <div class="mhdr"><div class="mtitle">± Adjust Stock</div><button class="mclose" onclick="closeModal('adj-modal')">✕</button></div>
+    <div class="mbody">
+      <input type="hidden" id="adj-prod-id"/>
+      <div class="fgrp"><div class="flbl">Product</div><input class="finp" id="adj-prod-name" readonly style="opacity:0.6;"/></div>
+      <div class="fgrp mt8" style="margin-top:8px;"><div class="flbl">Current Stock</div><input class="finp" id="adj-cur" readonly style="opacity:0.6;"/></div>
+      <div class="fgrp mt8" style="margin-top:8px;"><div class="flbl">Adjustment (+/-)</div><input class="finp" id="adj-val" type="number" placeholder="e.g. 10 or -5"/></div>
+      <div class="fgrp mt8" style="margin-top:8px;"><div class="flbl">Note</div><input class="finp" id="adj-note" placeholder="Reason for adjustment"/></div>
+    </div>
+    <div class="mfoot"><button class="hbtn bg" onclick="closeModal('adj-modal')">Cancel</button><button class="hbtn bp" onclick="applyAdj()">✓ Apply</button></div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
