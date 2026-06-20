@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sign In | Team-GenZ Cafe-POS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          syne: ['Syne','sans-serif'],
+          cond: ['Roboto Condensed','sans-serif'],
+          mono: ['JetBrains Mono','monospace'],
+        },
+        colors: {
+          bg:      'var(--bg)',
+          surface: 'var(--surface)',
+          surface2:'var(--surface2)',
+          surface3:'var(--surface3)',
+          border:  'var(--border)',
+          border2: 'var(--border2)',
+          accent:  'var(--accent)',
+          ink:     'var(--text)',
+          ink2:    'var(--text2)',
+          ink3:    'var(--text3)',
+          success: 'var(--green)',
+          danger:  'var(--red)',
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="login-page font-syne bg-bg text-ink" data-theme="dark">
+
+<div class="min-h-screen w-full grid lg:grid-cols-2">
+
+  <!-- ============ LEFT — BRAND PANEL ============ -->
+  <aside class="login-brand relative hidden lg:flex flex-col justify-between overflow-hidden px-12 py-12 bg-surface border-r border-border">
+
+    <!-- ambient blobs -->
+    <div class="login-blob w-72 h-72 bg-accent/20 -top-10 -left-10" style="animation:driftA 9s ease-in-out infinite;"></div>
+    <div class="login-blob w-80 h-80 bg-success/10 bottom-0 right-0" style="animation:driftB 11s ease-in-out infinite;"></div>
+
+    <!-- logo row -->
+    <div class="relative z-10 flex items-center gap-3">
+      <div class="licon">P</div>
+      <div class="ltxt">Team-GenZ<span>Cafe-POS</span></div>
+      <div class="lver">v2.4</div>
+    </div>
+
+    <!-- headline + ticket signature -->
+    <div class="relative z-10 flex items-center gap-10">
+      <div class="max-w-xs">
+        <h1 class="font-syne font-extrabold text-[34px] leading-[1.1] tracking-tight text-ink">
+          Built for the<br/>rush hour.
+        </h1>
+        <p class="mt-4 text-sm text-ink2 leading-relaxed font-cond">
+          Ring up orders, track stock, and watch the till move &mdash; all from one counter screen.
+        </p>
+
+        <div class="mt-9 flex flex-col gap-5">
+          <div class="feat-row">
+            <div class="feat-ico">🖥</div>
+            <div>
+              <div class="text-[13px] font-bold text-ink">Real-time checkout</div>
+              <div class="text-[11px] text-ink3 font-cond">Cash, card or QR &mdash; change calculated instantly.</div>
+            </div>
+          </div>
+          <div class="feat-row">
+            <div class="feat-ico">📦</div>
+            <div>
+              <div class="text-[13px] font-bold text-ink">Live inventory</div>
+              <div class="text-[11px] text-ink3 font-cond">Stock adjusts the moment an order is paid.</div>
+            </div>
+          </div>
+          <div class="feat-row">
+            <div class="feat-ico">🪪</div>
+            <div>
+              <div class="text-[13px] font-bold text-ink">Role-based staff access</div>
+              <div class="text-[11px] text-ink3 font-cond">Cashiers, baristas and admins each see what they need.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- signature: floating receipt ticket -->
+      <div class="hidden xl:block shrink-0">
+        <div class="ticket">
+          <div class="ticket-store">DRIP &amp; DRIZZLE CAFÉ</div>
+          <div class="ticket-sub">ORDER #2031 &middot; TAKEAWAY</div>
+          <div class="ticket-rule"></div>
+          <div class="t-line" style="animation-delay:.15s"><span>1&times; Caramel Iced Latte</span><span>$4.50</span></div>
+          <div class="t-line" style="animation-delay:.3s"><span>1&times; Butter Croissant</span><span>$3.25</span></div>
+          <div class="t-line" style="animation-delay:.45s"><span>2&times; Espresso Shot</span><span>$5.00</span></div>
+          <div class="ticket-total"><span>TOTAL</span><span>$12.75</span></div>
+          <div class="ticket-stamp">PAID</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- testimonial -->
+    <div class="relative z-10 flex items-center gap-3 bg-surface2 border border-border rounded-xl px-4 py-3 max-w-md">
+      <div class="avt shrink-0">SK</div>
+      <p class="text-[12px] text-ink2 leading-snug font-cond">
+        &ldquo;Closing time used to take twenty minutes. Now it's two.&rdquo;
+        <span class="block text-ink3 mt-0.5">&mdash; Sarah Kim, Manager · Drip &amp; Drizzle Café</span>
+      </p>
+    </div>
+  </aside>
+
+  <!-- ============ RIGHT — FORM PANEL ============ -->
+  <main class="relative flex flex-col items-center justify-center px-6 py-12 sm:px-10">
+
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle theme"
+      class="nfbtn absolute top-6 right-6">☀️</button>
+
+    <!-- mobile-only logo -->
+    <div class="lg:hidden flex items-center gap-3 mb-10">
+      <div class="licon">P</div>
+      <div class="ltxt">Team-GenZ<span>Cafe-POS</span></div>
+    </div>
+
+    <div class="w-full max-w-sm animate-[riseIn_.5s_ease]">
+      <div class="card !overflow-visible p-7 sm:p-8 relative">
+        <div class="absolute inset-x-0 top-0 h-[3px] rounded-t-[var(--radius)] bg-gradient-to-r from-transparent via-accent to-transparent opacity-70"></div>
+
+        <h2 class="font-syne font-extrabold text-2xl text-ink">Welcome back</h2>
+        <p id="login-subtext" class="text-[13px] text-ink3 mt-1 font-cond">Sign in to open the register.</p>
+
+        <!-- demo hint -->
+        <div class="mt-5 rounded-lg border border-dashed border-border2 bg-surface2 px-3 py-2.5 flex items-center justify-between gap-3">
+          <p class="text-[11px] text-ink3 leading-snug font-cond">
+            <span class="text-accent font-bold">Demo access</span><br/>
+            admin@cafepos.com &middot; admin123
+          </p>
+          <button type="button" onclick="autofillDemo()"
+            class="hbtn bg shrink-0 !text-[11px] !px-3 !py-1.5">Autofill</button>
+        </div>
+
+        <form id="login-form" class="mt-6 flex flex-col gap-4" novalidate>
+
+          <div id="login-error" class="hidden text-[12px] text-danger bg-[rgba(255,102,102,0.1)] border border-[rgba(255,102,102,0.25)] rounded-lg px-3 py-2"></div>
+
+          <div class="fgrp">
+            <div class="flbl">Staff Email</div>
+            <div class="pass-wrap">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink3 text-[13px] pointer-events-none">✉</span>
+              <input id="lg-email" type="email" class="finp !pl-9" placeholder="you@cafepos.com" autocomplete="username"/>
+            </div>
+          </div>
+
+          <div class="fgrp">
+            <div class="flbl">Password</div>
+            <div class="pass-wrap">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink3 text-[13px] pointer-events-none">🔒</span>
+              <input id="lg-pass" type="password" class="finp !pl-9 !pr-10" placeholder="••••••••" autocomplete="current-password"/>
+              <button type="button" class="pass-toggle" onclick="togglePass()" id="pass-eye" title="Show password">👁</button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-[12px]">
+            <label class="flex items-center gap-2 text-ink2 cursor-pointer select-none">
+              <input id="lg-remember" type="checkbox" class="accent-accent w-3.5 h-3.5" checked/>
+              Remember me
+            </label>
+            <a href="#" onclick="event.preventDefault();showToast('Ask your administrator to reset your password.')" class="text-accent font-bold hover:underline">Forgot password?</a>
+          </div>
+
+          <button id="lg-submit" type="submit" class="hbtn bp justify-center !py-2.5 !text-[13px] mt-1">
+            <span id="lg-submit-label">Sign In</span>
+          </button>
+        </form>
+      </div>
+
+      <p class="text-center text-[13px] text-ink2 mt-5 font-cond">
+        Just browsing? <a href="index.html" class="text-accent font-bold hover:underline">Back to the dashboard</a> — no account needed.
+      </p>
+
+      <p class="text-center text-[11px] text-ink3 mt-3 font-cond">
+        🔒 Your session stays on this device only.<br/>
+        © 2026 Team-GenZ Cafe-POS · v2.4
+      </p>
+    </div>
+  </main>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+  // ---- theme (mirrors app.js, shared localStorage key) ----
+  function initTheme(){
+    const t = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', t);
+    document.getElementById('theme-toggle').textContent = t === 'dark' ? '☀️' : '🌙';
+  }
+  function toggleTheme(){
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    document.getElementById('theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+  }
+  initTheme();
+
+  // ---- where to land after a successful sign-in ----
+  const nextUrl = new URLSearchParams(window.location.search).get('next') || 'index.html';
+  if(nextUrl.indexOf('resume=sell') !== -1){
+    document.getElementById('login-subtext').textContent = 'Sign in to finish ringing up that order.';
+  }
+
+  // ---- password visibility ----
+  function togglePass(){
+    const inp = document.getElementById('lg-pass');
+    const eye = document.getElementById('pass-eye');
+    const show = inp.type === 'password';
+    inp.type = show ? 'text' : 'password';
+    eye.textContent = show ? '🙈' : '👁';
+  }
+
+  // ---- demo autofill ----
+  function autofillDemo(){
+    document.getElementById('lg-email').value = 'admin@cafepos.com';
+    document.getElementById('lg-pass').value = 'admin123';
+    document.getElementById('lg-pass').focus();
+  }
+
+  // ---- toast (lightweight, same look as main app) ----
+  function showToast(msg, type='info'){
+    const wrap = document.getElementById('toast-wrap');
+    if(!wrap) return;
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    const icon = type==='success' ? '✓' : type==='error' ? '✕' : 'ℹ';
+    t.innerHTML = `<span>${icon}</span><span>${msg}</span>`;
+    wrap.appendChild(t);
+    setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(20px)'; t.style.transition='all .3s'; setTimeout(()=>t.remove(),300); },2500);
+  }
+
+  function showError(msg){
+    const el = document.getElementById('login-error');
+    el.textContent = msg;
+    el.classList.remove('hidden');
+    el.classList.remove('shake');
+    void el.offsetWidth; // restart animation
+    el.classList.add('shake');
+  }
+  function hideError(){
+    document.getElementById('login-error').classList.add('hidden');
+  }
+
+  function startSession(session, remember){
+    sessionStorage.removeItem('phocapos_session');
+    localStorage.removeItem('phocapos_session');
+    const store = remember ? localStorage : sessionStorage;
+    store.setItem('phocapos_session', JSON.stringify(session));
+    window.location.href = nextUrl;
+  }
+
+  document.getElementById('login-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    hideError();
+
+    const email = document.getElementById('lg-email').value.trim();
+    const pass  = document.getElementById('lg-pass').value;
+    const remember = document.getElementById('lg-remember').checked;
+
+    if(!email || !pass){
+      showError('Enter your email and password.');
+      return;
+    }
+
+    const btn = document.getElementById('lg-submit');
+    const label = document.getElementById('lg-submit-label');
+    btn.disabled = true;
+    btn.style.opacity = '0.75';
+    label.innerHTML = '<span class="spin"></span> Signing in…';
+
+    setTimeout(function(){
+      let session = null;
+
+      if(email.toLowerCase() === 'admin@cafepos.com' && pass === 'admin123'){
+        session = { name:'Dara Kim', role:'Administrator', email, loginAt:Date.now() };
+      } else {
+        try{
+          const raw = localStorage.getItem('phocapos_db');
+          if(raw){
+            const db = JSON.parse(raw);
+            const staff = (db.staff||[]).find(s => (s.email||'').toLowerCase() === email.toLowerCase());
+            if(staff) session = { name: staff.name, role: staff.role, email: staff.email, loginAt:Date.now() };
+          }
+        }catch(err){}
+      }
+
+      if(session){
+        startSession(session, remember);
+        return;
+      }
+
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      label.textContent = 'Sign In';
+      showError("We couldn't find that staff account. Double-check the email, or try the demo credentials above.");
+    }, 550);
+  });
+</script>
+</body>
+</html>

@@ -630,3 +630,93 @@ textarea.finp{resize:vertical;min-height:80px;}
     align-items: flex-start;
   }
 }
+
+/* ========================= 
+   LOGIN PAGE
+========================= */
+body.login-page{
+  display:block;height:auto;min-height:100vh;overflow-y:auto;overflow-x:hidden;
+}
+.ulogout{transition:color .15s;}
+.ulogout:hover{color:var(--red);}
+
+.login-blob{
+  position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;
+}
+@keyframes driftA{0%,100%{transform:translate(0,0);}50%{transform:translate(30px,-20px);}}
+@keyframes driftB{0%,100%{transform:translate(0,0);}50%{transform:translate(-24px,18px);}}
+
+/* Receipt ticket signature element */
+.ticket{
+  position:relative;width:100%;max-width:280px;
+  background:var(--surface2);border:1px solid var(--border2);
+  border-radius:10px;padding:18px 18px 22px;
+  font-family:'JetBrains Mono',monospace;
+  box-shadow:0 20px 50px -10px rgba(0,0,0,0.45);
+  transform:rotate(-4deg);
+  animation:floaty 6s ease-in-out infinite;
+}
+@keyframes floaty{0%,100%{transform:rotate(-4deg) translateY(0);}50%{transform:rotate(-3deg) translateY(-8px);}}
+.ticket::before{
+  content:'';position:absolute;left:0;right:0;top:-1px;height:1px;
+  background-image:radial-gradient(circle,var(--bg) 2.5px,transparent 2.6px);
+  background-size:14px 1px;background-position:0 0;
+}
+.ticket::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:8px;
+  background:linear-gradient(135deg,var(--surface2) 50%,transparent 50%) 0 0/8px 8px repeat-x;
+}
+.ticket-store{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--text);}
+.ticket-sub{font-size:9px;color:var(--text3);margin-top:2px;letter-spacing:0.5px;}
+.ticket-rule{border-top:1px dashed var(--border2);margin:10px 0;}
+.t-line{
+  display:flex;justify-content:space-between;gap:10px;font-size:10px;
+  color:var(--text2);margin-bottom:6px;opacity:0;
+  animation:riseLine .4s ease forwards;
+}
+@keyframes riseLine{from{opacity:0;transform:translateX(-4px);}to{opacity:1;transform:translateX(0);}}
+.ticket-total{
+  display:flex;justify-content:space-between;font-size:11px;font-weight:700;
+  color:var(--text);border-top:1px dashed var(--border2);padding-top:8px;margin-top:4px;
+}
+.ticket-stamp{
+  position:absolute;right:14px;bottom:30px;border:2px solid var(--accent);
+  color:var(--accent);font-size:11px;font-weight:800;letter-spacing:2px;
+  padding:3px 8px;border-radius:4px;transform:rotate(-10deg);opacity:0.85;
+}
+
+/* feature rows on brand panel */
+.feat-row{display:flex;gap:12px;align-items:flex-start;}
+.feat-ico{
+  width:34px;height:34px;border-radius:9px;flex-shrink:0;
+  background:var(--accent-dim);color:var(--accent);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+}
+
+/* password visibility toggle */
+.pass-wrap{position:relative;}
+.pass-toggle{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--text3);
+  font-size:13px;padding:4px;line-height:1;
+}
+.pass-toggle:hover{color:var(--text2);}
+
+.login-divider{display:flex;align-items:center;gap:10px;color:var(--text3);font-size:11px;}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.spin{
+  width:14px;height:14px;border-radius:50%;border:2px solid rgba(12,13,16,0.25);
+  border-top-color:#0c0d10;animation:spin .6s linear infinite;display:inline-block;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+@media (max-width:1023px){
+  .login-brand{display:none;}
+}
+@keyframes riseIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shake{10%,90%{transform:translateX(-1px);}20%,80%{transform:translateX(2px);}30%,50%,70%{transform:translateX(-4px);}40%,60%{transform:translateX(4px);}}
+.shake{animation:shake .4s;}
+@media (prefers-reduced-motion: reduce){
+  .ticket,.login-blob,.t-line,.shake,*[class*="animate-"]{animation:none !important;}
+}

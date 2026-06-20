@@ -88,6 +88,90 @@ function updateThemeButton(){
   if(btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
 
+// Session management (set by login.html). Browsing is open to everyone —
+// signing in is only required to complete a sale (see openPayModal).
+function getSession(){
+  try{
+    const raw = localStorage.getItem('phocapos_session') || sessionStorage.getItem('phocapos_session');
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+
+function isLoggedIn(){
+  return !!getSession();
+}
+
+function updateUserCard(){
+  const sess = getSession();
+  const avt = document.getElementById('ucard-avt');
+  const nm = document.getElementById('ucard-name');
+  const rl = document.getElementById('ucard-role');
+  const action = document.getElementById('ucard-action');
+  if(!avt || !nm || !rl || !action) return;
+
+  if(sess){
+    const name = sess.name || 'Staff';
+    const initials = name.split(' ').filter(Boolean).map(w=>w[0]).join('').slice(0,2).toUpperCase() || 'ST';
+    avt.textContent = initials;
+    nm.textContent = name;
+    rl.textContent = sess.role || 'Staff';
+    action.textContent = '⏻';
+    action.title = 'Log out';
+    action.onclick = logout;
+  } else {
+    avt.textContent = 'GU';
+    nm.textContent = 'Guest';
+    rl.textContent = 'Browsing · not signed in';
+    action.textContent = '→';
+    action.title = 'Sign in';
+    action.onclick = function(){ window.location.href = 'login.html'; };
+  }
+}
+
+// Greys out the checkout button and shows a sign-in hint while browsing as a guest.
+function applyRolePermissions(){
+  const btn = document.getElementById('pay-btn');
+  const note = document.getElementById('guest-checkout-note');
+  if(!btn) return;
+  const loggedIn = isLoggedIn();
+  btn.disabled = !loggedIn;
+  btn.style.opacity = loggedIn ? '' : '0.5';
+  btn.style.cursor = loggedIn ? '' : 'not-allowed';
+  btn.title = loggedIn ? '' : 'Sign in to complete a sale';
+  if(note) note.style.display = loggedIn ? 'none' : 'block';
+}
+
+function logout(){
+  if(!confirm('Log out of Team-GenZ Cafe-POS?')) return;
+  localStorage.removeItem('phocapos_session');
+  sessionStorage.removeItem('phocapos_session');
+  updateUserCard();
+  applyRolePermissions();
+  showToast('Signed out — you can keep browsing as a guest.','info');
+  go('dashboard');
+}
+
+// If a guest tried to checkout, their cart was stashed before redirecting to
+// login. After signing in we restore it and pick up right where they left off.
+function resumePendingCheckout(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('resume') !== 'sell') return;
+  history.replaceState({}, '', 'index.html');
+  try{
+    const raw = sessionStorage.getItem('phocapos_pending_cart');
+    if(raw){
+      cartItems = JSON.parse(raw);
+      sessionStorage.removeItem('phocapos_pending_cart');
+    }
+  }catch(e){}
+  go('sell');
+  renderCart();
+  if(isLoggedIn() && cartItems.length){
+    showToast('Welcome back — your cart is right where you left it.','success');
+    openPayModal();
+  }
+}
+
 const SEED_DB = {
   categories: [
     {id:1,name:'Iced Coffee',icon:'🧊',desc:'Refreshing cold brewed and iced coffee drinks'},
@@ -283,6 +367,8 @@ function go(page){
   else if(page === 'discounts') renderDiscounts();
   else if(page === 'staff') renderStaff();
   else if(page === 'settings') renderSettings();
+
+  if(page === 'sell') applyRolePermissions();
 }
 
 function renderDashboard(){
@@ -413,6 +499,14 @@ function recalc(){
 
 function openPayModal(){
   if(cartItems.length === 0) {showToast('Cart is empty','error'); return;}
+  if(!isLoggedIn()){
+    try{ sessionStorage.setItem('phocapos_pending_cart', JSON.stringify(cartItems)); }catch(e){}
+    showToast('Please sign in to complete this sale…','error');
+    setTimeout(function(){
+      window.location.href = 'login.html?next=' + encodeURIComponent('index.html?resume=sell');
+    }, 700);
+    return;
+  }
   openModal('pay-modal');
 }
 
@@ -972,11 +1066,21 @@ document.querySelectorAll('.modal-bg').forEach(bg=>{
 });
 
 initTheme();
+updateUserCard();
+applyRolePermissions();
 go('dashboard');
 updateInvBadge();
+resumePendingCheckout();
+
+window.addEventListener('pageshow', function(){ updateUserCard(); applyRolePermissions(); });
 
 function processPayment(){
   if(cartItems.length === 0) return;
+  if(!isLoggedIn()){
+    showToast('Please sign in to complete this sale','error');
+    closeModal('pay-modal');
+    return;
+  }
   const total = parseFloat(document.getElementById('cart-total').textContent.replace('$','')) || 0;
   const method = document.getElementById('pay-method').value;
   

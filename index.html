@@ -85,12 +85,12 @@
   </nav>
   <div class="sfooter">
     <div class="ucard">
-      <div class="avt">DK</div>
+      <div class="avt" id="ucard-avt">GU</div>
       <div class="flex1">
-        <div class="uname">Dara Kim</div>
-        <div class="urole">Administrator</div>
+        <div class="uname" id="ucard-name">Guest</div>
+        <div class="urole" id="ucard-role">Browsing · not signed in</div>
       </div>
-      <span style="color:var(--text3);font-size:16px">⋯</span>
+      <span class="ulogout" id="ucard-action" style="font-size:16px;cursor:pointer;">→</span>
     </div>
   </div>
 </aside>
@@ -234,7 +234,10 @@
           </div>
           <div class="cf-row"><span style="color:var(--text3);">Tax (10%)</span><span class="mono" id="cart-tax">$0.00</span></div>
           <div class="cf-row total"><span>Total</span><span class="mono" id="cart-total">$0.00</span></div>
-          <button class="pay-btn" onclick="openPayModal()">💳 Process Payment</button>
+          <button class="pay-btn" id="pay-btn" onclick="openPayModal()">💳 Process Payment</button>
+          <div id="guest-checkout-note" style="display:none;text-align:center;font-size:11px;color:var(--text3);margin-top:8px;">
+            🔒 <a href="login.html?next=index.html%3Fresume%3Dsell" style="color:var(--accent);font-weight:700;text-decoration:none;">Sign in</a> to complete a sale
+          </div>
         </div>
       </div>
     </div>
