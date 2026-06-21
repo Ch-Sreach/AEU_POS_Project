@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -39,7 +39,7 @@
   }
 </script>
 </head>
-<body class="login-page font-syne bg-bg text-ink" data-theme="dark">
+<body class="login-page font-syne bg-bg text-ink">
 
 <div class="min-h-screen w-full grid lg:grid-cols-2">
 
@@ -134,13 +134,13 @@
         <div class="absolute inset-x-0 top-0 h-[3px] rounded-t-[var(--radius)] bg-gradient-to-r from-transparent via-accent to-transparent opacity-70"></div>
 
         <h2 class="font-syne font-extrabold text-2xl text-ink">Welcome back</h2>
-        <p id="login-subtext" class="text-[13px] text-ink3 mt-1 font-cond">Sign in to open the register.</p>
+        <p id="login-subtext" class="text-[13px] text-ink3 mt-1 font-cond">Sign in with any staff email to open the register.</p>
 
         <!-- demo hint -->
         <div class="mt-5 rounded-lg border border-dashed border-border2 bg-surface2 px-3 py-2.5 flex items-center justify-between gap-3">
           <p class="text-[11px] text-ink3 leading-snug font-cond">
-            <span class="text-accent font-bold">Demo access</span><br/>
-            admin@cafepos.com &middot; admin123
+            <span class="text-accent font-bold">Demo admin login</span><br/>
+            admin@gmail.com &middot; admin
           </p>
           <button type="button" onclick="autofillDemo()"
             class="hbtn bg shrink-0 !text-[11px] !px-3 !py-1.5">Autofill</button>
@@ -197,15 +197,16 @@
 
 <script>
   // ---- theme (mirrors app.js, shared localStorage key) ----
+  // NOTE: variables live on :root, so the attribute must go on <html>, not <body>.
   function initTheme(){
-    const t = localStorage.getItem('theme') || 'dark';
-    document.body.setAttribute('data-theme', t);
+    const t = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
     document.getElementById('theme-toggle').textContent = t === 'dark' ? '☀️' : '🌙';
   }
   function toggleTheme(){
-    const cur = document.body.getAttribute('data-theme');
+    const cur = document.documentElement.getAttribute('data-theme');
     const next = cur === 'dark' ? 'light' : 'dark';
-    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
     document.getElementById('theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
   }
@@ -228,8 +229,8 @@
 
   // ---- demo autofill ----
   function autofillDemo(){
-    document.getElementById('lg-email').value = 'admin@cafepos.com';
-    document.getElementById('lg-pass').value = 'admin123';
+    document.getElementById('lg-email').value = 'admin@gmail.com';
+    document.getElementById('lg-pass').value = 'admin';
     document.getElementById('lg-pass').focus();
   }
 
@@ -287,7 +288,7 @@
     setTimeout(function(){
       let session = null;
 
-      if(email.toLowerCase() === 'admin@cafepos.com' && pass === 'admin123'){
+      if(email.toLowerCase() === 'admin@gmail.com' && pass === 'admin'){
         session = { name:'Dara Kim', role:'Administrator', email, loginAt:Date.now() };
       } else {
         try{
@@ -300,15 +301,17 @@
         }catch(err){}
       }
 
-      if(session){
-        startSession(session, remember);
-        return;
+      // Any email/password is welcome — no staff record needed. We just turn
+      // the part before the @ into a friendly display name.
+      if(!session){
+        const handle = email.split('@')[0].replace(/[._-]+/g,' ').trim();
+        const name = handle
+          ? handle.split(' ').filter(Boolean).map(w => w[0].toUpperCase() + w.slice(1)).join(' ')
+          : 'Staff';
+        session = { name, role:'Staff', email, loginAt:Date.now() };
       }
 
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      label.textContent = 'Sign In';
-      showError("We couldn't find that staff account. Double-check the email, or try the demo credentials above.");
+      startSession(session, remember);
     }, 550);
   });
 </script>
