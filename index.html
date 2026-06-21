@@ -278,6 +278,8 @@
           <div class="fgrp"><div class="flbl">Stock Quantity *</div><input class="finp" id="f-pstock" type="number" placeholder="0"/></div>
           <div class="fgrp"><div class="flbl">Cost Price</div><input class="finp" id="f-pcost" type="number" step="0.01" placeholder="0.00"/></div>
           <div class="fgrp"><div class="flbl">SKU / Barcode</div><input class="finp" id="f-psku" placeholder="e.g. SKU-001"/></div>
+          <div class="fgrp" style="grid-column:1/-1"><div class="flbl">Image URL</div><input class="finp" id="f-pimg" type="url" placeholder="https://example.com/photo.jpg" oninput="previewProdImg()"/></div>
+          <div class="fgrp" style="grid-column:1/-1" id="f-pimg-preview-wrap"><img id="f-pimg-preview" style="display:none;width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid var(--border);" onerror="this.style.display='none'"/></div>
           <div class="fgrp" style="grid-column:1/-1"><div class="flbl">Description</div><textarea class="finp" id="f-pdesc" placeholder="Product description..."></textarea></div>
           <div class="fgrp"><div class="flbl">Icon (Emoji)</div><input class="finp" id="f-picon" placeholder="🍎"/></div>
           <div class="fgrp"><div class="flbl">Status</div><select class="finp" id="f-pstatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>

@@ -425,9 +425,17 @@ function renderPOSGrid(){
 }
 
 function imgOrIcon(prodId, icon){
-  const img = PRODUCT_IMGS[prodId];
-  if(img) return `<img src="${img}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'"/>`;
+  const prod = DB.products.find(p=>p.id===prodId);
+  const img = (prod && prod.image) ? prod.image : PRODUCT_IMGS[prodId];
+  if(img) return `<img src="${img}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.parentElement.textContent='${(icon||'📦').replace(/'/g,"\\'")}'"/>`;
   return icon || '📦';
+}
+
+function previewProdImg(){
+  const url = document.getElementById('f-pimg').value.trim();
+  const prev = document.getElementById('f-pimg-preview');
+  if(url){ prev.src = url; prev.style.display = 'block'; }
+  else { prev.style.display = 'none'; prev.removeAttribute('src'); }
 }
 
 function addToCart(prodId){
@@ -570,6 +578,8 @@ function editProduct(id){
   document.getElementById('f-psku').value=p.sku||'';
   document.getElementById('f-pdesc').value=p.desc||'';
   document.getElementById('f-picon').value=p.icon||'';
+  document.getElementById('f-pimg').value=p.image||'';
+  previewProdImg();
 }
 
 function deleteProduct(id){
@@ -587,11 +597,12 @@ function setupAddProductForm(){
 }
 
 function resetProductForm(){
-  ['f-pname','f-pprice','f-pstock','f-pcost','f-psku','f-pdesc','f-picon'].forEach(id=>document.getElementById(id).value='');
+  ['f-pname','f-pprice','f-pstock','f-pcost','f-psku','f-pdesc','f-picon','f-pimg'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('f-pcat').value='';
   document.getElementById('f-pstatus').value='active';
   document.getElementById('edit-prod-id').value='';
   document.getElementById('add-prod-title').textContent='Add New Product';
+  previewProdImg();
 }
 
 function saveProduct(){
@@ -601,7 +612,7 @@ function saveProduct(){
   const stock=parseInt(document.getElementById('f-pstock').value)||0;
   if(!name||!cat||isNaN(price)){showToast('Fill required fields','error');return;}
   const editId=parseInt(document.getElementById('edit-prod-id').value)||0;
-  const data={name,cat,price,stock,cost:parseFloat(document.getElementById('f-pcost').value)||0,sku:document.getElementById('f-psku').value,desc:document.getElementById('f-pdesc').value,icon:document.getElementById('f-picon').value||'📦',status:document.getElementById('f-pstatus').value};
+  const data={name,cat,price,stock,cost:parseFloat(document.getElementById('f-pcost').value)||0,sku:document.getElementById('f-psku').value,desc:document.getElementById('f-pdesc').value,icon:document.getElementById('f-picon').value||'📦',image:document.getElementById('f-pimg').value.trim(),status:document.getElementById('f-pstatus').value};
   if(editId){
     const idx=DB.products.findIndex(p=>p.id===editId);
     if(idx>=0) DB.products[idx]={...DB.products[idx],...data};
